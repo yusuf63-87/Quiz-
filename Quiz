@@ -1,0 +1,64 @@
+import java.util.Scanner;
+
+class Question {
+    String questionText;
+    String[] options;
+    int correctOption; // index of correct option (0-based)
+
+    public Question(String questionText, String[] options, int correctOption) {
+        this.questionText = questionText;
+        this.options = options;
+        this.correctOption = correctOption;
+    }
+
+    public boolean askQuestion(Scanner scanner) {
+        System.out.println("\n" + questionText);
+        for (int i = 0; i < options.length; i++) {
+            System.out.println((i + 1) + ". " + options[i]);
+        }
+        System.out.print("Enter your choice (1-" + options.length + "): ");
+        int userAnswer = scanner.nextInt();
+        return userAnswer - 1 == correctOption;
+    }
+}
+
+public class QuizApp {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        Question[] questions = {
+            new Question("Which language is used for Android app development?",
+                         new String[]{"Java", "Python", "Swift", "C#"}, 0),
+
+            new Question("What is the capital of France?",
+                         new String[]{"Berlin", "Madrid", "Paris", "Rome"}, 2),
+
+            new Question("Which data structure uses FIFO?",
+                         new String[]{"Stack", "Queue", "Tree", "Graph"}, 1),
+
+            new Question("Who invented the Java language?",
+                         new String[]{"Dennis Ritchie", "James Gosling", "Guido van Rossum", "Bjarne Stroustrup"}, 1),
+
+            new Question("Which keyword is used to inherit a class in Java?",
+                         new String[]{"extends", "implements", "inherits", "super"}, 0)
+        };
+
+        int score = 0;
+
+        System.out.println("===== Welcome to the Online Quiz App =====");
+
+        for (Question q : questions) {
+            if (q.askQuestion(scanner)) {
+                System.out.println("Correct! ✅");
+                score++;
+            } else {
+                System.out.println("Wrong! ❌");
+            }
+        }
+
+        System.out.println("\n===== Quiz Completed =====");
+        System.out.println("Your Score: " + score + "/" + questions.length);
+
+        scanner.close();
+    }
+}
